@@ -20,15 +20,15 @@ public class Cat {
 	}
 
 	public void sleep() {
-		System.out.println("Кот спит;" + nickname);
+		System.out.println("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ;" + nickname);
 	}
 
 	public void eat() {
-		System.out.println("Кот ест; + nickname");
+		System.out.println("пїЅпїЅпїЅ пїЅпїЅпїЅ; + nickname");
 	}
 	public void grow(int addAge) {
 		age=age + addAge;
-		System.out.println("Кот вырос: " + age);
+		System.out.println("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " + age);
 	}
 		public int getAge() {
 			return age;
@@ -43,6 +43,10 @@ public class Cat {
 	}
 	    public void setNickname(String nickname) {
 	    	this.nickname = nickname;
+	    	
+	    }
+	    
+	    public void test() {
 	    }
 }
 

@@ -11,5 +11,11 @@ public class BirdDemo{
     Printable p = b -> System.out.println("This is "+ b);
     p.print(bird1);
     
+    
+    //9.Переделать класс использующий Printable используя ссылку на статический метод.
+    
+    Printable p1 = System.out:: println;
+    p.print(bird1);
+    
 }
 }

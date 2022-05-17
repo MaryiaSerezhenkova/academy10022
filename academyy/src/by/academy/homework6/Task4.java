@@ -1,12 +1,12 @@
 package by.academy.homework6;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Random;
 
@@ -49,26 +49,24 @@ public class Task4 {
 		for (int i = 1; i < 101; i++) {
 			String path = "academyy//src//by//academy//homework6//Files" + i + ".txt";
 			try (OutputStream output = new FileOutputStream(path)) {
-			
+
 				int size2 = RANDOM.nextInt(text.length());
-				
+
 				char[] x = text.substring(0, size2).toCharArray();
 				for (int j = 0; j < size2; j++) {
 					output.write((char) x[j]);
 				}
-				output.close();
+				// output.close();
 			} catch (IOException e) {
 				System.err.println(e.getMessage());
 			}
 
-			try (OutputStream output2 = new FileOutputStream("result_info.txt")) {
+			try (FileWriter writer = new FileWriter("result_info.txt");
+					BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
 				for (File file : dirs.listFiles()) {
-					String info = "Имя файла: " + file.getName() + "Размер: " + file.length() + " байт.";
-					char[] x = info.toCharArray();
-					for (int j = 1; j < 101; j++) {
-						output2.write(x[j]);
-					}
-					output2.close();
+
+					bufferedWriter.write("Имя файла: " + file.getName() + "Размер: " + file.length() + " байт.");
+					bufferedWriter.newLine();
 
 				}
 			} catch (IOException e) {

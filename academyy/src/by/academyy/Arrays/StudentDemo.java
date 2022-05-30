@@ -28,18 +28,18 @@ public class StudentDemo {
 	}
 
 	public static void nextCourse(ArrayList<Student> a1) {
-		Student[] average1 = new Student[a1.size()];
-		a1.toArray(average1);
-		for (int i = 0; i < average1.length; i++) {
-			if (average1[i].getAverageMark() >= 3 && average1[i].getCourse() < 5) {
-				System.out.println(average1[i].getName() + " go to the " + (average1[i].getCourse() + 1) + " course ");
+		Student[] st1 = new Student[a1.size()];
+		a1.toArray(st1);
+		for (int i = 0; i < st1.length; i++) {
+			if (st1[i].getAverageMark() >= 3 && st1[i].getCourse() < 5) {
+				System.out.println(st1[i].getName() + " go to the " + (st1[i].getCourse() + 1) + " course ");
 			}
-			if (average1[i].getAverageMark() >= 3 && average1[i].getCourse() == 5) {
-				System.out.println(average1[i].getName() + " sucsesfully end the University");
+			if (st1[i].getAverageMark() >= 3 && st1[i].getCourse() == 5) {
+				System.out.println(st1[i].getName() + " sucsesfully end the University");
 			}
-			if (average1[i].getAverageMark() < 3) {
-				a1.remove(average1[i]);
-				System.out.println(average1[i].getName() + " expelled from the University");
+			if (st1[i].getAverageMark() < 3) {
+				a1.remove(st1[i]);
+				System.out.println(st1[i].getName() + " expelled from the University");
 			}
 		}
 	}

@@ -16,10 +16,11 @@ public class Task13 {
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Enter number");
 		int n = scan.nextInt();
-		if (n < 4) {
+		do {
 			System.out.println("Error");
 			n = scan.nextInt();
-		}
+		} while (n < 4);
+
 		int[] array = new int[n];
 		Random rand = new Random();
 		for (int i = 0; i < array.length; i++) {
@@ -28,7 +29,7 @@ public class Task13 {
 		System.out.println(Arrays.toString(array));
 		int[] array2 = new int[n];
 		for (int i = 0; i < array.length; i++) {
-			if (array[i] % 2 == 0 && array[i]!=0) {
+			if (array[i] % 2 == 0 && array[i] != 0) {// ????? 0
 				array2[i] = array[i];
 			}
 		}

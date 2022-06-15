@@ -36,8 +36,12 @@ public class Reader {
         System.out.println(name + " take book: " + title);
     }
 
-    public void takeBook(Book b) {
-        System.out.println(name +" take "+ b);
+    public void takeBook(Book ...books) {
+        System.out.println(name +" take: ");
+        for(Book b:books) {
+        	 System.out.print(b.getTitle());
+        	
+        }
     }
  
     public void returnBook(int quantity) {

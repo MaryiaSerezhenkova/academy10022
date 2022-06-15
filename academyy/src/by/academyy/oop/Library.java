@@ -31,7 +31,9 @@ public class Library {
 		readInfo.put(r2, b6);
 		readInfo.put(r3, b7);
 
-		takeBook(readInfo);
+		r1.takeBook();
+		r1.takeBook(b1,b2, b3,b4);
+		//takeBook(readInfo);
 	}
 
 	public static void takeBook(HashMap<Reader, Book> readInfo) {

@@ -30,19 +30,15 @@ public class Recursion {
 	}
 
 	public static void printNumbers(int A, int B) {
-		int i = 0;
-		i++;
-		while (A < B) {
-			A = A + i;
-			System.out.println(A);
-		}
-		while (B < A) {
-			A = A - i;
-			System.out.println(A);
-		}
-		if (i == Math.abs(B - A)) {
-			return;
+		System.out.println(A);
+		if (A < B) {
+			printNumbers(++A, B);
 
+		} else if (A > B) {
+			printNumbers(--A, B);
+
+		} else {
+			return;
 		}
 	}
 

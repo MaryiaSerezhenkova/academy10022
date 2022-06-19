@@ -48,7 +48,6 @@ public class Food implements Cookable {
 		builder.append("]");
 		return builder.toString();
 	}
-
 	@Override
 	public void cook(String str) {
 		System.out.println(str+" "+ this.name);

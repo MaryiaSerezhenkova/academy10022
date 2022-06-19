@@ -6,15 +6,17 @@ package by.academyy.InnerClasses;
 public class FoodDemo {
 
 	public static void main(String[] args) {
-		Cookable food = new Food("meat", 500) {
+		Food food = new Food("meat", 500);
+		food.prepare(new Cookable() {
 			@Override
-			public void prepare(Cookable a, String str) {
-				System.out.println("We have " + a.toString() + "Let's cook a medium rare steak");
+			public void cook(String str) {
+				str = "Let's cook a medium rare steak from ";
+				System.out.println(str+food.getName());
 			}
-		};
+		},"Cook new dish from"); 
 
 		food.cook("Cook new dish from");
-		
+	    
 	}
 
 }

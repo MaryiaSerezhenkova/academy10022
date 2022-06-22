@@ -9,21 +9,29 @@ package by.academyy.Strings;
 //добавляется знак «диез» (#), который нельзя использовать в сообщениях.
 
 public class Secret {
+public static void main(String[] args) {
+    String str = "Abracadabra";
+    char[] symb = str.toCharArray();
+    char[] symb2 = new char[symb.length + 1];
+    int y = 0;
+    for (int i = 0; i < symb.length / 2 + (symb.length % 2 == 1 ? 1 : 0); i++) {
+        symb2[y++] = symb[i];
+        symb2[y++] = symb[symb.length - i - 1];
+    }
+    symb2[symb2.length - 1] = '#';
+    System.out.println(new String(symb2));
 
-	public static void main(String[] args) {
-		String str = "Abracadabra";
-		char[] symb = str.toCharArray();
-		char[] symb2 = new char[symb.length + 1];
-		int y = 0;
-		for (int i = 0; i < symb.length / 2 + 1; i++) {
-			symb2[y++] = symb[i];
-			if (i != symb.length / 2) {
-				symb2[y++] = symb[symb.length - i - 1];
-			}
-		}
-	symb2[symb2.length-1]='#';
-		System.out.println(new String(symb2));
-	}
-
+    char[] word = new char[symb2.length - 1];
+    int x=0;
+    for (int i = 0; i < symb2.length-1 ; i=i+2) {    
+        word[x++]=symb2[i];
+//        for (int j = 1; j < symb2.length-(symb2.length % 2 == 1 ? 0 : 1) ; j=j+2) {    
+//         word[x++] = symb2[word.length-j];
+//        }доделать вторую половину слова!!!
+    }
+    
+    System.out.println(new String(word));
+    
+}
 }
 //Aabrrbaacda#

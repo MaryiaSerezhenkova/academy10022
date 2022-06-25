@@ -23,11 +23,12 @@ public static void main(String[] args) {
 
     char[] word = new char[symb2.length - 1];
     int x=0;
-    for (int i = 0; i < symb2.length-1 ; i=i+2) {    
-        word[x++]=symb2[i];
-//        for (int j = 1; j < symb2.length-(symb2.length % 2 == 1 ? 0 : 1) ; j=j+2) {    
-//         word[x++] = symb2[word.length-j];
-//        }доделать вторую половину слова!!!
+    for (int i = 0; i < symb2.length - 1; i = i + 2) {
+        word[x++] = symb2[i];
+        int k = symb2.length / 2;
+        for (int j = symb2.length - (symb2.length % 2 == 1 ? 2 : 3); j > 0; j = j - 2) {
+            word[k++] = symb2[j];
+        }
     }
     
     System.out.println(new String(word));

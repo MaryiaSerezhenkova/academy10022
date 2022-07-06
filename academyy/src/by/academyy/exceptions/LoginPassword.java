@@ -11,8 +11,9 @@ public class LoginPassword {
 	public static final Pattern valid = Pattern.compile("[a-zA-Z0-9_]{5,20}");
 
 	public static void main(String[] args) throws WrongLoginException, WrongPasswordException {
+		Scanner scan = new Scanner(System.in);
 		try {
-			Scanner scan = new Scanner(System.in);
+
 			System.out.println("Enter login");
 			String login = scan.next();
 			System.out.println("Enter password");
@@ -20,11 +21,14 @@ public class LoginPassword {
 			System.out.println("Enter password again");
 			String confirmPassword = scan.next();
 			System.out.println(checkLoginPassword(login, password, confirmPassword));
-			scan.close();
+
 		} catch (WrongLoginException e) {
 			System.out.println("Login error " + e.getMessage());
 		} catch (WrongPasswordException e) {
 			System.out.println("Password error " + e.getMessage());
+		} finally {
+			scan.close();
+
 		}
 
 	}

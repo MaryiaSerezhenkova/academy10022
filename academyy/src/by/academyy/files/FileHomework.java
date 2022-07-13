@@ -9,9 +9,9 @@ import java.io.File;
  
 public class FileHomework {
  
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         File catalog = new File("src/by/academyy/Cycles");
-        System.out.println(getFile(catalog, "java"));
+        getFile(catalog, "java");
         readWriteFile(catalog);
         File catalog2 = new File("src/Arr");
         existsFile(catalog2);
@@ -52,14 +52,17 @@ public class FileHomework {
  
     }
  
-    public static String getFile(File dir, String ext) {
-            String [] fileName = dir.list();
-            for (int i=0; i<fileName.length; i++) {
-            while (fileName[i].endsWith(ext)) {
-                return fileName[i];
-            }
+    public static void getFile(File dir, String ext) throws Exception {
+        String [] fileName = dir.list();
+        for (int i=0; i<fileName.length; i++) {
+        if (fileName[i].endsWith(ext)) {
+            System.out.println( fileName[i]);
         }
-        System.out.println("File not found");
-        return null;
-    }
+    
+        else    System.out.println("File not found");
+        }
+        if (fileName==null) {
+            throw new Exception("File doesn't exists");
+        }
+}
 }

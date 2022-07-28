@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 //Создание типа Array, который является классом оболочкой над массивом целого типа.
 
@@ -163,13 +165,13 @@ public class ArrayListCustom<T extends Number> {
 	}
 
 	public List<T> findSimpleNumbers() {
-		List<T> sum = new ArrayList<>();
+		List<T> simple = new ArrayList<>();
 		for (int i = 0; i < items.length; i++) {
 			if (isSimple(items[i].doubleValue())) {
-				sum.add(items[i]);
+				simple.add(items[i]);
 			}
 		}
-		return sum;
+		return simple;
 
 	}
 
@@ -186,20 +188,117 @@ public class ArrayListCustom<T extends Number> {
 		}
 		return true;
 	}
-	public void fillFromFile(String filename) {
-		String s;
-		ArrayList<T>arr = new ArrayList<>();
-		try (BufferedReader br=new BufferedReader(new FileReader(new File(filename)))) {
-			while((s=br.readLine())!=null) {
-				String[]array = s.split(" ");
-				for (int i=0; i<array.length; i++) {
-					arr.add(Double.valueOf(array[i]).doubleValue());
-				}
-				
+
+	public List<T> findFibonacciNumbers() {
+		List<T> fib = new ArrayList<>();
+		for (int i = 0; i < items.length; i++) {
+			if (isFibonacci(items[i].doubleValue())) {
+				fib.add(items[i]);
 			}
-			
-		}catch (IOException e) {
-			
 		}
+		return fib;
+
+	}
+
+	private boolean isFibonacci(double n) {
+		for (int i = 0; i < fibonacciArray().length; i++) {
+			if (n != fibonacciArray()[i]) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private Double[] fibonacciArray() {
+		Integer n = (int) maxElement();
+		Double[] fibonacci = new Double[n + 1];
+		fibonacci[0] = 0.0;
+		fibonacci[1] = 1.0;
+
+		for (int i = 2; i < n; i++) {
+			fibonacci[i] = fibonacci[i - 1] + fibonacci[i - 2];
+		}
+		return fibonacci;
+	}
+
+	public List<T> findDif10Numbers() {
+		List<T> dif = new ArrayList<>();
+		for (int i = 0; i < items.length; i++) {
+			if (isDifNumbers(items[i].doubleValue())) {
+				dif.add(items[i]);
+			}
+		}
+		return dif;
+
+	}
+
+	private boolean is3DijitNumbers(double n) {
+		if (n / 100 < 1 || n / 100 > 9) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean isDifNumbers(double n) {
+		if (!is3DijitNumbers(n)) {
+			return false;
+		}
+		if (get10value(n)[0] != get10value(n)[1] & get10value(n)[0] != get10value(n)[2]
+				& get10value(n)[1] != get10value(n)[2]) {
+			return true;
+		}
+		return false;
+
+	}
+
+	private int[] get10value(double n) {
+		if (!is3DijitNumbers(n)) {
+			return null;
+		}
+		int[] values = new int[3];
+		values[0] = (int) n / 100;
+		values[1] = (int) (n - values[0] * 100) / 10;
+		values[2] = (int) (n - values[0] * 100 - values[1] * 10);
+		return values;
+	}
+
+	public void fillFromConsole(int n) {
+		ArrayList<Double> arr = new ArrayList<>(n);// Как сделать с Т???
+		try (Scanner scan = new Scanner(System.in)) {
+			System.out.println("Enter " + n + " numbers");
+			for (int i = 0; i < n; i++) {
+				double x = scan.nextDouble();
+				arr.add(x);
+			}
+		}
+		System.out.println(arr.toString());
+	}
+
+//	public void fillFromFile(String filename) {
+//		String s;
+//		ArrayList<T>arr = new ArrayList<>();
+//		try (BufferedReader br=new BufferedReader(new FileReader(new File(filename)))) {
+//			while((s=br.readLine())!=null) {
+//				String[]array = s.split(" ");
+//				for (int i=0; i<array.length; i++) {
+//					arr.add(Double.valueOf(array[i]).doubleValue());
+//				}
+//				
+//			}
+//			
+//		}catch (IOException e) {
+//			
+//		}
+//	}
+	public void fillRandom(int n, int start, int end) {
+		ArrayList<Double> arr = new ArrayList<>(n);// Как сделать с Т???
+		Random rand = new Random();
+		for (int i = 0; i < n; i++) {
+			double x = rand.nextDouble(start, (end - start) + 1);
+			arr.add(x);
+		}
+
+		System.out.println(arr.toString());
 	}
 }

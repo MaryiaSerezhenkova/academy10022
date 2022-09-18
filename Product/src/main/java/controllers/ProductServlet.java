@@ -1,11 +1,15 @@
 package controllers;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import services.ProductService;
 
 /**
  * Servlet implementation class ProductServlet
@@ -14,28 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ProductServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	 private final ProductService productService = ProductService.getInstance();
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
+	    @Override
+	    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+	        req.setCharacterEncoding("UTF-8");
+	        resp.setContentType("text/html; charset=UTF-8");
+	        req.setAttribute("productData", productService.get());
+	        RequestDispatcher form = req.getRequestDispatcher("/ProductForm.jsp");
+	        form.forward(req, resp);
+	    }
 }

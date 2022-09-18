@@ -24,7 +24,7 @@ public class ArtistStorage implements IArtistStorage {
 
 	@Override
 	public List<Artist> get() {
-		return null;
+		return this.data;
 	}
 
 	@Override

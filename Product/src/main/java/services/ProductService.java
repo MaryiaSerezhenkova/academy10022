@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import entity.core.Product;
+import entity.core.ProductBuilder;
 import services.api.IProductService;
 import storage.ProductStorage;
 import storage.api.IProductStorage;
@@ -33,6 +34,9 @@ public class ProductService implements IProductService {
 		if (item.getTitle() == null || item.getTitle().isBlank()) {
 			throw new IllegalArgumentException("Название продукта введено некорректно");
 		}
+		if (item.getPrice()<=0) {
+			throw new IllegalArgumentException("Стоимость введена некорректно");
+		}
 	}
 
 	public static ProductService getInstance() {
@@ -41,9 +45,10 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public void addNewProduct(int id, String title, double price, double discount, String description) {
-		this.validate(new Product(id, title, price, discount, description));
-		this.storage.save(new Product(id, title, price, discount, description));
+	public void add(int id, String title, double price, double discount, String description) {
+		this.validate(ProductBuilder.create().setId(id)
+				.setTitle(title).setPrice(price).setDiscount(discount).setDescription(description).build());
+	       this.storage.save(ProductBuilder.create().setId(id).setTitle(title).setPrice(price).setDiscount(discount).setDescription(description).build());
 	}
 
 }

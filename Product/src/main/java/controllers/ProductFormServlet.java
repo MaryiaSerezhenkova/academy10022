@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import services.ProductService;
+import services.api.IProductService;
 
 /**
  * Servlet implementation class ProductFormServlet
@@ -17,7 +18,7 @@ import services.ProductService;
 public class ProductFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private final ProductService productService = ProductService.getInstance();
+	private final IProductService productService = ProductService.getInstance();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -39,8 +40,8 @@ public class ProductFormServlet extends HttpServlet {
 		String discount = req.getParameter("discount");
 		String description = req.getParameter("description");
 		try {
-			productService.addNewProduct(Integer.parseInt(id), title, Double.parseDouble(price),
-					Double.parseDouble(discount), description);
+			productService.add(Integer.parseInt(id), title, Double.parseDouble(price), Double.parseDouble(discount),
+					description);
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}

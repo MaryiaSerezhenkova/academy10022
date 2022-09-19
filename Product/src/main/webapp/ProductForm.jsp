@@ -22,11 +22,11 @@
             </tr>
             <c:forEach items="${productData}" var="product">
                 <tr>
-                    <td><c:out value="${product.getId()}" /></td>
-                    <td><c:out value="${product.getTitle()}" /></td>
-                    <td><c:out value="${product.getPrice()}" /></td>
-                    <td><c:out value="${product.getDiscount()}" /></td>
-                    <td><c:out value="${product.getDescription()}" /></td>
+                    <td>< value="${product.getId()}" /></td>
+                    <td>< value="${product.getTitle()}" /></td>
+                    <td>< value="${product.getPrice()}" /></td>
+                    <td>< value="${product.getDiscount()}" /></td>
+                    <td>< value="${product.getDescription()}" /></td>
                 </tr>
             </c:forEach>
         </table>

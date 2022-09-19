@@ -31,8 +31,7 @@ public class ProductStorage implements IProductStorage {
 	}
 
 	public void save(Product item) {
-		// TODO Auto-generated method stub
-
+		 this.data.add(item);
 	}
 
 	public static ProductStorage getInstance() {

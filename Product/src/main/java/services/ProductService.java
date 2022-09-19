@@ -41,9 +41,9 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public void addNewProduct(int id, String title, int price, int discount, String description) {
-		 this.validate(new Product(id, title, price, discount, description));
-	       this.storage.save(new Product(id, title, price, discount, description));		
+	public void addNewProduct(int id, String title, double price, double discount, String description) {
+		this.validate(new Product(id, title, price, discount, description));
+		this.storage.save(new Product(id, title, price, discount, description));
 	}
 
 }

@@ -1,12 +1,11 @@
 package storage;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import entity.core.User;
 import entity.core.UserBuilder;
 import storage.api.IUserStorage;
+import java.time.LocalDate;
 
 public class UserStorage implements IUserStorage {
 	private static UserStorage instance = new UserStorage();
@@ -15,9 +14,21 @@ public class UserStorage implements IUserStorage {
 
 	public UserStorage() {
 		this.data.add(UserBuilder.create().setId(1).setLogin("Admin").setPassword("admin").setFirstName("Admin")
-				.setLastName("Admin").setBirthDate(new GregorianCalendar(2000, Calendar.JANUARY, 1))
-				.setRegistrationDate(GregorianCalendar.getInstance()).setRole(User.Role.ADMIN).build());
+				.setLastName("Admin").setDateOfBirth(LocalDate.of(2000, 1, 1)).setRegistrationDate(LocalDate.now())
+				.setRole(User.Role.ADMIN).build());
 
+	}
+
+	public static UserStorage getInstance() {
+		UserStorage result = instance;
+		synchronized (UserStorage.class) {
+			if (instance == null) {
+				synchronized (UserStorage.class) {
+					result = instance = new UserStorage();
+				}
+			}
+		}
+		return result;
 	}
 
 	public List<User> get() {
@@ -29,19 +40,9 @@ public class UserStorage implements IUserStorage {
 	}
 
 	public void save(User item) {
-
 		item.setId(id++);
-		item.setRegistrationDate(GregorianCalendar.getInstance());
+		item.setRegistrationDate(LocalDate.now());
 		item.setRole(User.Role.USER);
 		data.add(item);
-
 	}
-
-	public static UserStorage getInstance() {
-		if (instance == null) {
-			instance = new UserStorage();
-		}
-		return instance;
-	}
-
 }

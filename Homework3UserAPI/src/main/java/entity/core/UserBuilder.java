@@ -1,6 +1,6 @@
 package entity.core;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class UserBuilder {
 	private int id;
@@ -8,10 +8,9 @@ public class UserBuilder {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private Calendar birthDate;
-	private Calendar registrationDate;
+	private LocalDate dateOfBirth;
+	private LocalDate registrationDate;
 	private User.Role role;
-
 	private UserBuilder() {
 	}
 
@@ -45,12 +44,12 @@ public class UserBuilder {
 		return this;
 	}
 
-	public UserBuilder setBirthDate(Calendar birthDate) {
-		this.birthDate = birthDate;
+	public UserBuilder setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 		return this;
 	}
 
-	public UserBuilder setRegistrationDate(Calendar registrationDate) {
+	public UserBuilder setRegistrationDate(LocalDate registrationDate) {
 		this.registrationDate = registrationDate;
 		return this;
 	}
@@ -61,7 +60,7 @@ public class UserBuilder {
 	}
 
 	public User build() {
-		return new User(id, login, password, firstName, lastName, birthDate, registrationDate, role);
+		return new User(id, login, password, firstName, lastName, dateOfBirth, registrationDate, role);
 
 	}
 

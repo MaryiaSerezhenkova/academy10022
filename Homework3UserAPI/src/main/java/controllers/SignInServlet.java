@@ -1,7 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,22 +9,32 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import entity.core.UserBuilder;
+import entity.core.User;
 import services.UserService;
 import services.api.IUserService;
 
-@WebServlet(name = "SignUpServlet", urlPatterns = "/api/user")
-public class SignUpServlet extends HttpServlet {
-	/**
-	 * 
-	 */
+/**
+ * Servlet implementation class SignUpServlet
+ */
+@WebServlet("/api/login")
+public class SignInServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final IUserService userService = UserService.getInstance();
 
+	@Override
+	public void init() throws ServletException {
+		super.init();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=UTF-8");
-		resp.sendRedirect(getServletContext().getContextPath() + "/jsp/SignUpPage.jsp");
+		resp.sendRedirect(getServletContext().getContextPath() + "/jsp/SignInPage.jsp");
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,9 +43,6 @@ public class SignUpServlet extends HttpServlet {
 
 		String login = req.getParameter("login");
 		String password = req.getParameter("password");
-		String firstName = req.getParameter("firstName");
-		String lastName = req.getParameter("lastName");
-		String birthDate = req.getParameter("birthDate");
 
 		List<String> errors = new ArrayList<String>();
 
@@ -48,27 +54,19 @@ public class SignUpServlet extends HttpServlet {
 			errors.add("Password is empty");
 		}
 
-		if (firstName == null || firstName.isBlank()) {
-			errors.add("First name is empty");
-		}
-
-		if (lastName == null || lastName.isBlank()) {
-			errors.add("Last name is empty");
-		}
-
-		if (birthDate == null || birthDate.isBlank()) {
-			errors.add("Birth date is empty");
+		// VALIDATION
+		if (userService.getUserByLoginPassword(login, password) == null) {
+			errors.add("Login or password not valid.");
 		}
 
 		if (errors.isEmpty()) {
-			LocalDate localDate = LocalDate.parse(birthDate);
-
-			userService.save(UserBuilder.create().setLogin(login).setPassword(password).setFirstName(firstName)
-					.setLastName(lastName).setDateOfBirth(localDate).build());
-			resp.sendRedirect(getServletContext().getContextPath() + "/jsp/SignInPage.jsp");
+			User user = userService.getUserByLoginPassword(login, password);
+			HttpSession session = req.getSession();
+			session.setAttribute("user", user);
+			resp.sendRedirect(getServletContext().getContextPath() + "/jsp/WelcomeUser.jsp");
 		} else {
 			req.setAttribute("errorMessages", errors);
-			req.getRequestDispatcher("/jsp/SignUpPage.jsp").include(req, resp);
+			req.getRequestDispatcher("/jsp/SignInPage.jsp").include(req, resp);
 		}
 	}
 

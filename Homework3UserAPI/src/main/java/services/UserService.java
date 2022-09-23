@@ -12,20 +12,29 @@ public class UserService implements IUserService {
 
 	private static UserService instance = null;
 
+	public static UserService getInstance() {
+		UserService result = instance;
+		synchronized (UserService.class) {
+			if (result == null) {
+				synchronized (UserService.class) {
+					result = instance = new UserService();
+				}
+			}
+		}
+		return result;
+	}
+
 	private UserService() {
 	}
 
-	@Override
 	public List<User> get() {
 		return storage.get();
 	}
 
-	@Override
 	public User get(int id) {
 		return storage.get(id);
 	}
 
-	@Override
 	public void validate(User item) {
 		if (item == null) {
 			throw new IllegalStateException("No letter passed");
@@ -51,35 +60,26 @@ public class UserService implements IUserService {
 			throw new IllegalStateException("Last name is empty");
 		}
 
-		if (item.getBirthDate() == null) {
+		if (item.getDateOfBirth() == null) {
 			throw new IllegalStateException("Birth date is empty");
 		}
 
 	}
 
-	@Override
 	public void save(User item) {
 		validate(item);
 		storage.save(item);
 	}
 
-	public static UserService getInstance() {
-		if (instance == null) {
-			instance = new UserService();
-		}
-		return instance;
-	}
-
-	@Override
-	public User confirmUser(String login, String password) {
+	public User getUserByLoginPassword(String login, String password) {
 		User confirmUser = null;
 		for (User item : storage.get()) {
 			if (item.getLogin().equals(login) && item.getPassword().equals(password)) {
-
-			}
 			confirmUser = item;
+		}
 		}
 		return confirmUser;
 
 	}
+	
 }

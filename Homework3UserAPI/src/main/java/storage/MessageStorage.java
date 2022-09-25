@@ -1,15 +1,15 @@
 package storage;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import entity.core.Message;
 import storage.api.IMessageStorage;
 
 public class MessageStorage implements IMessageStorage {
 	private static MessageStorage instance = new MessageStorage();
-	private List<Message> data = new ArrayList<Message>();
-	int id = 0;
+	private final Map <String, List<Message>> chats = new HashMap<>();
 
 
 	public static MessageStorage getInstance() {
@@ -24,23 +24,31 @@ public class MessageStorage implements IMessageStorage {
 		return result;
 	}
 
+
 	@Override
-	public List<Message> get() {
-		return this.data;
+	public long getCount() {
+		return this.chats.values().stream().mapToInt(List::size).sum();
 	}
 
 
 	@Override
-	public Message get(int id) {
-		return this.data.get(id);
+	public List<Message> get(String login) {
+		return this.chats.get(login);
 	}
 
+
 	@Override
-	public void save(Message item) {
-		item.setId(id++);
-		item.setDate(LocalDateTime.now());
-		data.add(item);
+	public void addMessage(String login, Message message) {
+		List <Message> chat;
+		if(this.chats.containsKey(login)) {
+			chat=this.chats.get(login);
+		}else {
+			chat = new ArrayList<>();
+			this.chats.put(login, chat);
+		}
+		chat.add(message);
 		
 	}
+
 
 }

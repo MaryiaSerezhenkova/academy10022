@@ -3,10 +3,16 @@ package services.api;
 import java.util.List;
 
 import entity.core.Message;
+import entity.core.User;
+import entity.core.dto.MessageCreateDTO;
 
+public interface IMessageService {
 
+	List<Message> get(User currentUser);
 
-public interface IMessageService extends IEssenceService<Message> {
+	void addMessage(MessageCreateDTO message);
 
-	List<Message> get(String login);
+	long getCount(User currentUser);
+
+	long getCount();
 }

@@ -1,26 +1,21 @@
 package entity.core;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class UserBuilder {
-	private int id;
 	private String login;
 	private String password;
 	private String firstName;
 	private String lastName;
 	private LocalDate dateOfBirth;
-	private LocalDate registrationDate;
+	private LocalDateTime registrationDate;
 	private User.Role role;
 	private UserBuilder() {
 	}
 
 	public static UserBuilder create() {
 		return new UserBuilder();
-	}
-
-	public UserBuilder setId(int id) {
-		this.id = id;
-		return this;
 	}
 
 	public UserBuilder setLogin(String login) {
@@ -49,7 +44,7 @@ public class UserBuilder {
 		return this;
 	}
 
-	public UserBuilder setRegistrationDate(LocalDate registrationDate) {
+	public UserBuilder setRegistrationDate(LocalDateTime registrationDate) {
 		this.registrationDate = registrationDate;
 		return this;
 	}
@@ -60,7 +55,7 @@ public class UserBuilder {
 	}
 
 	public User build() {
-		return new User(id, login, password, firstName, lastName, dateOfBirth, registrationDate, role);
+		return new User(login, password, firstName, lastName, dateOfBirth, registrationDate, role);
 
 	}
 

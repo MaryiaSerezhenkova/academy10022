@@ -1,16 +1,23 @@
 package services;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Collection;
+
 import entity.core.User;
+import entity.core.User.Role;
+import entity.core.dto.UserCreateDTO;
+import services.api.IMessageService;
 import services.api.IUserService;
 import storage.UserStorage;
 import storage.api.IUserStorage;
 
 public class UserService implements IUserService {
 
+	private final IUserStorage userStorage;
+	private final IMessageService messageService;;
 	private static final IUserStorage storage = UserStorage.getInstance();
 
-	private static UserService instance = null;
+	private static UserService instance = new UserService();
 
 	public static UserService getInstance() {
 		UserService result = instance;
@@ -25,61 +32,89 @@ public class UserService implements IUserService {
 	}
 
 	private UserService() {
+		this.userStorage = UserStorage.getInstance();
+		this.messageService = MessageService.getInstance();
 	}
 
-	public List<User> get() {
-		return storage.get();
+	@Override
+	public User get(String login) {
+		return this.userStorage.get(login);
 	}
 
-	public User get(int id) {
-		return storage.get(id);
+	@Override
+	public User signUp(UserCreateDTO user) {
+		this.validationForSignUp(user);
+		User entity = new User();
+		entity.setLogin(user.getLogin());
+		entity.setPassword(user.getPassword());
+		entity.setFirstName(user.getFirstName());
+		entity.setLastName(user.getLastName());
+		entity.setDateOfBirth(user.getDateOfBirth());
+		entity.setRegistrationDate(LocalDateTime.now());
+		;
+		entity.setRole(Role.USER);
+		this.userStorage.add(entity);
+		return entity;
 	}
 
-	public void validate(User item) {
-		if (item == null) {
-			throw new IllegalStateException("No letter passed");
+	private void validationForSignUp(UserCreateDTO user) {
+		String errorMessage = "";
+		if (this.nullOrEmpty(user.getLogin())) {
+			errorMessage += "Логин обязателен для заполнения";
+		}
+		if (this.nullOrEmpty(user.getPassword())) {
+			if (!errorMessage.isEmpty()) {
+				errorMessage += "; ";
+			}
+			errorMessage += "Пароль обязателен для заполнения";
+		}
+		if (this.nullOrEmpty(user.getFirstName())) {
+			if (!errorMessage.isEmpty()) {
+				errorMessage += "; ";
+			}
+			errorMessage += "Имя обязательно для заполнения";
+		}
+		if (this.nullOrEmpty(user.getLastName())) {
+			if (!errorMessage.isEmpty()) {
+				errorMessage += "; ";
+			}
+			errorMessage += "Фамилия обязательна для заполнения";
 		}
 
-		if (storage.get().contains(item)) {
-			throw new IllegalStateException("User already exists");
+		if (!errorMessage.isEmpty()) {
+			throw new IllegalArgumentException(errorMessage);
 		}
+	}
 
-		if (item.getLogin() == null || item.getLogin().isBlank()) {
-			throw new IllegalStateException("Login is empty");
-		}
+	private boolean nullOrEmpty(String val) {
+		return val == null || val.isEmpty();
+	}
 
-		if (item.getPassword() == null || item.getPassword().isBlank()) {
-			throw new IllegalStateException("Password is empty");
-		}
+	@Override
+	public Collection<User> getAll() {
+		return this.userStorage.getAll();
+	}
 
-		if (item.getFirstName() == null || item.getFirstName().isBlank()) {
-			throw new IllegalStateException("First name is empty");
-		}
+	@Override
+	public long getCount() {
+		return this.userStorage.getCount();
+	}
 
-		if (item.getLastName() == null || item.getLastName().isBlank()) {
-			throw new IllegalStateException("Last name is empty");
-		}
-
-		if (item.getDateOfBirth() == null) {
-			throw new IllegalStateException("Birth date is empty");
-		}
+	@Override
+	public void save(User user) {
+		// TODO Auto-generated method stub
 
 	}
 
-	public void save(User item) {
-		validate(item);
-		storage.save(item);
-	}
+//	public User getUserByLoginPassword(String login, String password) {
+//		User confirmUser = null;
+//		for (User item : storage.get()) {
+//			if (item.getLogin().equals(login) && item.getPassword().equals(password)) {
+//			confirmUser = item;
+//		}
+//		}
+//		return confirmUser;
+//
+//	}
 
-	public User getUserByLoginPassword(String login, String password) {
-		User confirmUser = null;
-		for (User item : storage.get()) {
-			if (item.getLogin().equals(login) && item.getPassword().equals(password)) {
-			confirmUser = item;
-		}
-		}
-		return confirmUser;
-
-	}
-	
 }

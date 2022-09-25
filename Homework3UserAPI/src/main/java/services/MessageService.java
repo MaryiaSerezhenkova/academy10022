@@ -1,17 +1,18 @@
 package services;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import entity.core.Message;
+import entity.core.User;
+import entity.core.dto.MessageCreateDTO;
 import services.api.IMessageService;
 import storage.MessageStorage;
 import storage.api.IMessageStorage;
 
 public class MessageService implements IMessageService {
 
-	private static final IMessageStorage storage = MessageStorage.getInstance();
+	 private static MessageService instance = new MessageService();
 
-	private static MessageService instance = null;
+	    private final IMessageStorage chatStorage;
 
 	public static MessageService getInstance() {
 		MessageService result = instance;
@@ -25,60 +26,41 @@ public class MessageService implements IMessageService {
 		return result;
 	}
 
-	private MessageService() {
+	    private MessageService() {
+	        this.chatStorage = MessageStorage.getInstance();
+	    }
+
+	    @Override
+	    public List<Message> get(User currentUser) {
+	        return this.chatStorage.get(currentUser.getLogin());
+	    }
+
+	    public void addMessage(MessageCreateDTO message) {
+	        this.validation(message);
+	        Message entity = new Message();
+	        entity.setSender(message.getSender());;
+	        entity.setRecipient(message.getRecipient());
+	        entity.setText(message.getText());
+	        entity.setDate(LocalDateTime.now());
+
+	        this.chatStorage.addMessage(entity.getRecipient(), entity);
+	    }
+
+	    public void validation(MessageCreateDTO message){
+	        if(message.getRecipient() == null || message.getRecipient().isBlank()){
+	            throw new IllegalArgumentException("Не заполнена информация кому отправили сообщение");
+	        }
+	    }
+
+	    @Override
+	    public long getCount(User currentUser) {
+	        return this.chatStorage.get(currentUser.getLogin()).size();
+	    }
+
+	    @Override
+	    public long getCount() {
+	        return this.chatStorage.getCount();
+	    }
+
 	}
 
-	
-	
-	@Override
-	public List<Message> get(String login) {
-		return (List<Message>) storage.get().stream()
-				.filter(message -> message.getSender().equals(login) || message.getRecipient().equals(login))
-				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<Message> get() {
-		return storage.get();
-	}
-
-	@Override
-	public Message get(int id) {
-		return storage.get(id);
-		}
-	
-
-	@Override
-	public void validate(Message item) {
-		if (item == null) {
-			throw new IllegalStateException("No letter passed");
-		}
-
-		if (item.getSender() == null || item.getSender().isBlank()) {
-			throw new IllegalStateException("Sender is empty");
-		}
-
-		if (item.getRecipient() == null || item.getRecipient().isBlank()) {
-			throw new IllegalStateException("Receiver is empty");
-		}
-
-//		if (!User.getLogin().equals(item.getSender())) {
-//			throw new IllegalStateException("Sender does not exist");
-//		}
-////
-//		if (userService.get().stream().noneMatch(user -> user.getLogin().equals(item.getRecipient()))) {
-//			throw new IllegalStateException("Receiver does not exist");
-//		}
-
-		if (item.getText() == null || item.getText().isBlank()) {
-			throw new IllegalStateException("Text is empty");
-		}
-	}
-	
-	@Override
-	public void save(Message item) {
-		validate(item);
-		storage.save(item);
-	}
-
-}

@@ -1,10 +1,18 @@
 package services.api;
 
 
-import entity.core.User;
+import java.util.Collection;
 
-public interface IUserService extends IEssenceService<User> {
+import entity.core.User;
+import entity.core.dto.UserCreateDTO;
+
+public interface IUserService {
+	void save (User user);
 	 
-	User getUserByLoginPassword(String login, String password);
+	//User getUserByLoginPassword(String login, String password);
+	User get (String login);
+	User signUp (UserCreateDTO User);
+	Collection<User> getAll();
+	long getCount();
 
 }

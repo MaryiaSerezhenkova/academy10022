@@ -2,7 +2,6 @@ package entity.core;
 import java.time.LocalDateTime;
 
 public class MessageBuilder {
-	private int id;
 	private String text;
 	private String sender;
 	private String recipient;
@@ -13,11 +12,6 @@ public class MessageBuilder {
 
 	public static MessageBuilder create() {
 		return new MessageBuilder();
-	}
-
-	public MessageBuilder setId(int id) {
-		this.id = id;
-		return this;
 	}
 
 	public MessageBuilder setText(String text) {
@@ -41,7 +35,7 @@ public class MessageBuilder {
 	}
 
 	public Message build() {
-		return new Message(id, text, sender, recipient, date);
+		return new Message(text, sender, recipient, date);
 
 	}
 

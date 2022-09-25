@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import entity.core.User;
-import services.UserService;
-import services.api.IUserService;
+import services.AuthService;
+import services.api.IAuthService;
 
 /**
  * Servlet implementation class SignUpServlet
@@ -21,7 +20,12 @@ import services.api.IUserService;
 @WebServlet("/api/login")
 public class SignInServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final IUserService userService = UserService.getInstance();
+	
+	private final IAuthService authService;
+
+    public SignInServlet() {
+        this.authService = AuthService.getInstance();
+    }
 
 	@Override
 	public void init() throws ServletException {
@@ -54,20 +58,15 @@ public class SignInServlet extends HttpServlet {
 			errors.add("Password is empty");
 		}
 
-		// VALIDATION
-		if (userService.getUserByLoginPassword(login, password) == null) {
-			errors.add("Login or password not valid.");
-		}
-
-		if (errors.isEmpty()) {
-			User user = userService.getUserByLoginPassword(login, password);
-			HttpSession session = req.getSession();
-			session.setAttribute("user", user);
-			resp.sendRedirect(getServletContext().getContextPath() + "/jsp/WelcomeUser.jsp");
-		} else {
-			req.setAttribute("errorMessages", errors);
-			req.getRequestDispatcher("/jsp/SignInPage.jsp").include(req, resp);
-		}
-	}
+		 try{
+	            User authentication = this.authService.authentication(new entity.core.dto.UserLoginDTO(login, password));
+	            req.getSession().setAttribute("user", authentication);
+	            resp.sendRedirect(req.getContextPath() + "/");
+	        } catch (IllegalArgumentException e){
+	            req.setAttribute("error", true);
+	            req.setAttribute("message", e.getMessage());
+	            req.getRequestDispatcher("/jsp/SignUpPage.jsp").forward(req, resp);
+	        }
+	    }
 
 }

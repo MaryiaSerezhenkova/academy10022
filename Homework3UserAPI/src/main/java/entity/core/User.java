@@ -1,26 +1,24 @@
 package entity.core;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class User {
-	private int id;
 	private String login;
 	private String password;
-	private final String firstName;
-	private final String lastName;
-	private final LocalDate dateOfBirth;
-	private LocalDate registrationDate;
+	private String firstName;
+	private String lastName;
+	private LocalDate dateOfBirth;
+	private LocalDateTime registrationDate;
 	private User.Role role;
 
 	public enum Role {
 		ADMIN, USER
 	}
-
-	public User(int id, String login, String password, String firstName, String lastName, LocalDate dateOfBirth,
-			LocalDate registrationDate, Role role) {
+	public User(String login, String password, String firstName, String lastName, LocalDate dateOfBirth,
+			LocalDateTime registrationDate, Role role) {
 		super();
-		this.id = id;
 		this.login = login;
 		this.password = password;
 		this.firstName = firstName;
@@ -30,12 +28,12 @@ public class User {
 		this.role = role;
 	}
 
-	public User.Role getRole() {
-		return role;
+	public User() {
+		super();
 	}
 
-	public int getId() {
-		return id;
+	public User.Role getRole() {
+		return role;
 	}
 
 	public String getLogin() {
@@ -62,11 +60,11 @@ public class User {
 		this.password = password;
 	}
 
-	public LocalDate getRegistrationDate() {
+	public LocalDateTime getRegistrationDate() {
 		return registrationDate;
 	}
 
-	public void setRegistrationDate(LocalDate registrationDate) {
+	public void setRegistrationDate(LocalDateTime registrationDate) {
 		this.registrationDate = registrationDate;
 	}
 
@@ -74,12 +72,20 @@ public class User {
 		return dateOfBirth;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public void setRole(User.Role role) {
 		this.role = role;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	@Override
@@ -101,7 +107,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", password=" + password + ", firstName=" + firstName
+		return "User [login=" + login + ", password=" + password + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", registrationDate=" + registrationDate
 				+ ", role=" + role + "]";
 	}

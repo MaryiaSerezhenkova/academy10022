@@ -1,23 +1,24 @@
 package storage;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import entity.core.User;
 import entity.core.UserBuilder;
 import storage.api.IUserStorage;
-import java.time.LocalDate;
 
 public class UserStorage implements IUserStorage {
 	private static UserStorage instance = new UserStorage();
-	private List<User> data = new ArrayList<User>();
+	private final Map<String, User> users = new HashMap<>();
 	int id = 0;
 
-	public UserStorage() {
-		this.data.add(UserBuilder.create().setId(1).setLogin("Admin").setPassword("admin").setFirstName("Admin")
-				.setLastName("Admin").setDateOfBirth(LocalDate.of(2000, 1, 1)).setRegistrationDate(LocalDate.now())
-				.setRole(User.Role.ADMIN).build());
-
-	}
+//	public UserStorage() {
+//		((IUserStorage) this.users).add(UserBuilder.create().setId(1).setLogin("Admin").setPassword("admin").setFirstName("Admin")
+//				.setLastName("Admin").setDateOfBirth(LocalDate.of(2000, 1, 1)).setRegistrationDate(LocalDate.now())
+//				.setRole(User.Role.ADMIN).build());
+//
+//	}
 
 	public static UserStorage getInstance() {
 		UserStorage result = instance;
@@ -31,18 +32,26 @@ public class UserStorage implements IUserStorage {
 		return result;
 	}
 
-	public List<User> get() {
-		return this.data;
+	@Override
+	public long getCount() {
+		return this.users.size();
 	}
 
-	public User get(int id) {
-		return this.data.get(id);
+	@Override
+	public User get(String login) {
+		return this.users.get(login);
 	}
 
-	public void save(User item) {
-		item.setId(id++);
-		item.setRegistrationDate(LocalDate.now());
-		item.setRole(User.Role.USER);
-		data.add(item);
+	@Override
+	public void add(User user) {
+		if (this.users.containsKey(user.getLogin())) {
+			throw new IllegalArgumentException("Пользователь с логином " + user.getLogin() + " уже сущуствует");
+		}
+		this.users.put(user.getLogin(), user);
+	}
+
+	@Override
+	public Collection<User> getAll() {
+		return this.users.values();
 	}
 }

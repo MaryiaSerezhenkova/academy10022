@@ -22,8 +22,10 @@ public class ProductFormServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html; charset=UTF-8");
 		req.setAttribute("productData", productService.get());
-		RequestDispatcher form = req.getRequestDispatcher("/NewProductForm.jsp");
+		RequestDispatcher form = req.getRequestDispatcher("/view/NewProductForm.jsp");
 		form.forward(req, resp);
 	}
 
@@ -34,17 +36,16 @@ public class ProductFormServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
-		String id = req.getParameter("id");
 		String title = req.getParameter("title");
 		String price = req.getParameter("price");
 		String discount = req.getParameter("discount");
 		String description = req.getParameter("description");
 		try {
-			productService.add(Integer.parseInt(id), title, Double.parseDouble(price), Double.parseDouble(discount),
+			productService.add(title, Double.parseDouble(price), Double.parseDouble(discount),
 					description);
 		} catch (Exception e) {
 			throw new ServletException(e);
 		}
-		resp.sendRedirect(req.getContextPath() + "/ProductServlet");
+		resp.sendRedirect(req.getContextPath() + "/view/ProductServlet");
 	}
 }

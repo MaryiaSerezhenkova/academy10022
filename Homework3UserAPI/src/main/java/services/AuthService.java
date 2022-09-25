@@ -20,11 +20,7 @@ public class AuthService implements IAuthService {
     @Override
     public User authentication(UserLoginDTO credential) {
         User user = this.userService.get(credential.getLogin());
-        if(user == null){
-            throw new IllegalArgumentException("Неверный логин или пароль");
-        }
-
-        if(!Objects.equals(user.getPassword(), credential.getPassword())){
+        if((user == null) || !Objects.equals(user.getPassword(), credential.getPassword())){
             throw new IllegalArgumentException("Неверный логин или пароль");
         }
 

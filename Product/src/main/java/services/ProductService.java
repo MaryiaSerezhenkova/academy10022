@@ -45,10 +45,10 @@ public class ProductService implements IProductService {
 	}
 
 	@Override
-	public void add(int id, String title, double price, double discount, String description) {
-		this.validate(ProductBuilder.create().setId(id)
+	public void add(String title, double price, double discount, String description) {
+		this.validate(ProductBuilder.create()
 				.setTitle(title).setPrice(price).setDiscount(discount).setDescription(description).build());
-	       this.storage.save(ProductBuilder.create().setId(id).setTitle(title).setPrice(price).setDiscount(discount).setDescription(description).build());
+	       this.storage.save(ProductBuilder.create().setTitle(title).setPrice(price).setDiscount(discount).setDescription(description).build());
 	}
 
 }

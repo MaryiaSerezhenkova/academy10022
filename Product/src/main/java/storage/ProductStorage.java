@@ -11,6 +11,8 @@ public class ProductStorage implements IProductStorage {
 	private List<Product> data = new ArrayList<Product>();
 
 	private static ProductStorage instance = new ProductStorage();
+	
+	private int id=5;
 
 	public ProductStorage() {
 		this.data.add(ProductBuilder.create().setId(1).setTitle("Молоко").setPrice(3.0).setDiscount(5.0)
@@ -31,6 +33,7 @@ public class ProductStorage implements IProductStorage {
 	}
 
 	public void save(Product item) {
+		item.setId(id++);
 		 this.data.add(item);
 	}
 

@@ -1,7 +1,7 @@
 package entity.core;
 public class Product {
 
-	private final int id;
+	private int id;
 	private final String title;
 	private final double price;
 	private final double discount;
@@ -34,6 +34,9 @@ public class Product {
 
 	public String getDescription() {
 		return description;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

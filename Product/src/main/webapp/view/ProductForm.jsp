@@ -31,8 +31,8 @@
             </c:forEach>
         </table>
         <form method="get" name="add">
-            action="${pageContext.request.contextPath}/ProductServlet">
-           <p> <button type='submit'>Отправить</button></p>
+            action="${pageContext.request.contextPath}/ProductServlet"
+           <p> <button type='submit'>Добавить</button></p>
         </form>
 </body>
 </html>

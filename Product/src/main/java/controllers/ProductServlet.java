@@ -25,7 +25,7 @@ public class ProductServlet extends HttpServlet {
 	        req.setCharacterEncoding("UTF-8");
 	        resp.setContentType("text/html; charset=UTF-8");
 	        req.setAttribute("productData", productService.get());
-	        RequestDispatcher form = req.getRequestDispatcher("/ProductForm.jsp");
+	        RequestDispatcher form = req.getRequestDispatcher("/view/ProductForm.jsp");
 	        form.forward(req, resp);
 	    }
 }

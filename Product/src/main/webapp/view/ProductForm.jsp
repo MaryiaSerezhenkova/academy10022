@@ -8,31 +8,50 @@
 <title>Список продуктов</title>
 </head>
 <body>
- 
-        <p class="select">
-            <!--declaring classes to group properties-->
-            Список продуктов <br>
-        <table>
-            <tr>
-                <th>id</th>
-                <th>Название</th>
-                <th>Цена, руб</th>
-                <th>Скидка, %</th>
-                <th>Описание</th>
-            </tr>
-            <c:forEach items="${productData}" var="product">
-                <tr>
-                    <td>< value="${product.getId()}" /></td>
-                    <td>< value="${product.getTitle()}" /></td>
-                    <td>< value="${product.getPrice()}" /></td>
-                    <td>< value="${product.getDiscount()}" /></td>
-                    <td>< value="${product.getDescription()}" /></td>
-                </tr>
-            </c:forEach>
-        </table>
-        <form method="get" name="add">
-            action="${pageContext.request.contextPath}/ProductServlet"
-           <p> <button type='submit'>Добавить</button></p>
-        </form>
+
+	<div>
+		<table>
+			<tr>
+				<th>id</th>
+				<th>title</th>
+				<th>price</th>
+				<th>discount, %</th>
+				<th>description</th>
+			</tr>
+			<c:forEach items="${producs}" var="product">
+				<tr>
+					<td>< value="${product.getId()}" /></td>
+					<td>< value="${product.getTitle()}" /></td>
+					<td>< value="${product.getPrice()}" /></td>
+					<td>< value="${product.getDiscount()}" /></td>
+					<td>< value="${product.getDescription()}" /></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	<div>
+	<label> title</label>
+	<input type="text" name="title" />
+	</div>
+	<div>
+	<label> price</label>
+	<input type="text" name="price" />
+	</div>
+	<div>
+	<label> discount</label>
+	<input type="text" name="discount" />
+	</div>
+	<div>
+	<label> description</label>
+	<input type="text" name="description" />
+	</div>
+
+	<p>
+		<input type="submit" name="submit_btn" value="Add">
+	</p>
+
+<form method="POST"
+		action="${pageContext.request.contextPath}/api/product">
+		</form>
 </body>
 </html>

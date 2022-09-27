@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import entity.dto.ProductCreateDTO;
+import services.ProductService;
 import services.api.IProductService;
 
 /**
@@ -18,6 +19,10 @@ public class ApiProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	 private IProductService service;
+	 
+	 public ApiProductServlet() {
+		 this.service=ProductService.getInstance();
+		 }
 
 	    @Override
 	    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

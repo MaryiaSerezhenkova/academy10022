@@ -1,22 +1,20 @@
 package storage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import entity.core.Product;
-import entity.core.ProductBuilder;
 import storage.api.IProductStorage;
 
 public class ProductStorage implements IProductStorage {
 
-	private List<Product> data = new ArrayList<Product>();
 
-	private Map<Integer, Product> products;
+	private Map<Integer, Product> products=new HashMap<>();
 
 //	private static ProductStorage instance = new ProductStorage();
 //	
-	private int id = 5;
 //
 //	public ProductStorage() {
 //		this.data.add(ProductBuilder.create().setId(1).setTitle("Молоко").setPrice(3.0).setDiscount(5.0)
@@ -40,7 +38,7 @@ public class ProductStorage implements IProductStorage {
 		if ((Integer)p.getId()!=null) {
 			throw new IllegalStateException("id must be empty");
 		}
-		p.setId(this.products.size());
+		p.setId((Integer)this.products.size());
 		this.products.put(p.getId(), p);
 
 	}

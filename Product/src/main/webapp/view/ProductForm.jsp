@@ -11,6 +11,7 @@
 
 	<div>
 		<table>
+		<thead>
 			<tr>
 				<th>id</th>
 				<th>title</th>
@@ -18,6 +19,7 @@
 				<th>discount, %</th>
 				<th>description</th>
 			</tr>
+			</thead>
 			<c:forEach items="${products}" var="product">
 				<tr>
 					<td>< value="${product.id}" /></td>

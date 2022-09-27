@@ -34,6 +34,7 @@ public class ProductStorage implements IProductStorage {
 		return this.products.get(id);
 	}
 
+	@SuppressWarnings("unused")
 	public void save(Product p) {
 		if ((Integer)p.getId()!=null) {
 			throw new IllegalStateException("id must be empty");

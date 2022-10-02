@@ -1,6 +1,6 @@
 package entity.core;
 public class ProductBuilder {
-	private int id;
+	private long id;
 	private String title;
 	private double price;
 	private double discount;
@@ -18,7 +18,7 @@ public class ProductBuilder {
 
 	}
 
-	public ProductBuilder setId(int id) {
+	public ProductBuilder setId(long id) {
 		this.id = id;
 		return this;
 	}

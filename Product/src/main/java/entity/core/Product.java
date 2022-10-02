@@ -1,13 +1,18 @@
 package entity.core;
+
 public class Product {
 
-	private int id;
-	private final String title;
-	private final double price;
-	private final double discount;
-	private final String description;
+	private long id;
+	private String title;
+	private double price;
+	private double discount;
+	private String description;
 
-	public Product(int id, String title, double price, double discount, String description) {
+	public Product() {
+		super();
+	}
+
+	public Product(long id, String title, double price, double discount, String description) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -16,7 +21,7 @@ public class Product {
 		this.description = description;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -35,7 +40,8 @@ public class Product {
 	public String getDescription() {
 		return description;
 	}
-	public void setId(int id) {
+
+	public void setId(long id) {
 		this.id = id;
 	}
 

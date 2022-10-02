@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface IEssenceStorage<TYPE> {
 	List<TYPE> get();
-	TYPE get (int id);
+	TYPE get (long id);
 	
 }

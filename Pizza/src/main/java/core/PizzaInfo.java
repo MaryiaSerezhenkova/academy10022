@@ -3,16 +3,32 @@ package core;
 import api.IPizzaInfo;
 
 public class PizzaInfo implements IPizzaInfo {
-	
-	private String name; 
-	private String description; 
+
+	private Long id;
+	private String name;
+	private String description;
 	private int size;
 	
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public PizzaInfo() {
 		super();
 	}
 
+	public PizzaInfo(Long id, String name, String description, int size) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.size = size;
+	}
 	public PizzaInfo(String name, String description, int size) {
 		super();
 		this.name = name;
@@ -40,22 +56,13 @@ public class PizzaInfo implements IPizzaInfo {
 		this.size = size;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Pizza [name=");
-		builder.append(name);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", size=");
-		builder.append(size);
-		builder.append("]");
-		return builder.toString();
-	}
-
 	public String getName() {
 		return name;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "PizzaInfo [name=" + name + ", description=" + description + ", size=" + size + ", id=" + id + "]";
+	}
 
 }
